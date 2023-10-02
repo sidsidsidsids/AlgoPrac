@@ -1,0 +1,5 @@
+-- 코드를 입력하세요
+SELECT ins.ANIMAL_ID, ins.ANIMAL_TYPE, ins.NAME
+FROM ANIMAL_INS as ins left join ANIMAL_OUTS as outs on ins.ANIMAL_ID = outs.ANIMAL_ID
+WHERE ins.SEX_UPON_INTAKE != outs.SEX_UPON_OUTCOME
+ORDER BY ANIMAL_ID
