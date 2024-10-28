@@ -2,28 +2,34 @@ import sys
 
 N, M = map(int, sys.stdin.readline().rstrip('\n').split())
 arr = [[] for _ in range(N)]
+L = [0] * M
+R = [0] * M
 for n in range(N):
     arr[n] = list(sys.stdin.readline().rstrip('\n').split())
-
-answer = -1
-minima = sys.maxsize
-for n in range(N):
-    value = 0
-    maxval = 0
+    S = arr[n][0]
+    arr[n][1] = list(map(int, arr[n][1]))
+    cnt = 0
     for m in range(M):
-        for nn in range(N):
-            if nn == n:
-                continue
-            pos, ans = arr[nn]
-            if ans[m] == "1":
-                if pos == "L":
-                    value -= 1
-                elif pos == "R":
-                    value += 1
-        maxval = max(maxval, abs(value))
-    if maxval < minima:
-        answer = n + 1
-        minima = maxval
+        cnt += arr[n][1][m]
+        if S == "L":
+            L[m] += cnt
+        else:
+            R[m] += cnt
 
-print(answer)
-print(minima)
+result = sys.maxsize
+target = -1
+for n in range(N):
+    cnt = 0
+    tmp = 0
+    for m in range(M):
+        cnt += arr[n][1][m]
+        if arr[n][0] == "L":
+            tmp = max(tmp, abs(L[m] - cnt - R[m]))
+        else:
+            tmp = max(tmp, abs(L[m] + cnt - R[m]))
+    if tmp < result:
+        result = tmp
+        target = n + 1
+
+print(target)
+print(result)
