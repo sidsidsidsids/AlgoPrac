@@ -1,0 +1,1 @@
+print(abs(ord("I") - ord(input())) + 84)
